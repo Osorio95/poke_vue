@@ -1,5 +1,5 @@
 <template>
-    <div id="topheader" class="container my-6 px-6 mx-auto">
+    <nav id="topHeader" class="container my-6 px-6 mx-auto">
 
         <div class="btn-group flex shadow-md" role="group">
             <RouterLink to="/"
@@ -16,7 +16,7 @@
             </RouterLink>
         </div>
 
-    </div>
+    </nav>
 </template>
 
 <script>
