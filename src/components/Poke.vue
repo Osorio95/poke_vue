@@ -1,18 +1,19 @@
 <template>
-    <div id="Poke" class="h-full">
-        <div @click="emitPokeDatos" class="cursor-pointer relative block bg-white rounded-lg shadow-lg h-full">
-            <div v-if="pokeDatos.sprites">
+    <div id="Poke" class="h-full" v-if="pokeDatos.sprites">
+        <div class="relative pt-12 text-sm">
+            <div @click="emitPokeDatos" class="static cursor-pointer block bg-white rounded-2xl shadow-lg h-full pt-12">
                 <div class="flex">
-                    <div class="h-full relative overflow-hidden bg-no-repeat bg-cover drop-shadow-lg m-auto"
+                    <div class="w-full absolute top-0 overflow-hidden bg-no-repeat bg-cover drop-shadow-lg"
                         data-mdb-ripple="true" data-mdb-ripple-color="light">
-                        <img :src="pokeDatos.sprites.front_default" class="w-full" />
+                        <img :src="pokeDatos.sprites.front_default"
+                            class="w-28 overflow-hidden bg-no-repeat bg-cover drop-shadow-lg m-auto" />
                     </div>
                 </div>
-                <div class="p-4">
-                    <h6 class="text-sm font-bold text-gray-400 mb-3 capitalize"> N°{{ pokeDatos.id }}</h6>
+                <div class="py-1 px-4">
+                    <h6 class="text-sm font-bold text-gray-400 capitalize"> N°{{ pokeDatos.id }}</h6>
                     <h5 class="text-slate-900 font-bold text-lg mb-3 capitalize">{{ pokeDatos.name }}</h5>
-                    <div class="grid grid-rows-1 grid-flow-col gap-4 pb-6">
-                        <div class="inline-block px-2 py-2.5 align-middle text-white font-medium text-xs leading-tight rounded-md shadow-sm capitalize"
+                    <div class="grid grid-rows-1 grid-flow-col gap-4 pb-2">
+                        <div class="inline-block px-2 py-2.5 align-middle text-white font-medium text-xs leading-tight rounded-xl shadow-sm capitalize"
                             :class="colorType(type.type.name)" v-for="(type, index) in pokeDatos.types" :key="index">
                             {{ type.type.name }}
                         </div>
