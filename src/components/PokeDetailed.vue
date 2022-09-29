@@ -1,5 +1,5 @@
 <template>
-    <div id="pokeDetailed">
+    <div id="pokeDetailed" class="sticky">
         <div class="relative py-16 text-sm">
             <div class="static flex flex-colum gap-3 bg-white rounded-2xl shadow-lg cursor-pointer pt-12"
                 @click="emitRemove">
@@ -21,16 +21,18 @@
 
                     <h3 class="text-slate-900 text-base font-bold">Pokedex Entry</h3>
                     <div v-if="pokeSpecies">
-                        <p class="mx-6 my-1">
+                        <p class="mx-6 my-1 normal-case">
                             {{ pokeSpecies.flavor_text_entries[0].flavor_text }}
                         </p>
                     </div>
                     <h3 class="text-slate-900 text-base font-bold mt-2">Abilities</h3>
-                    <div class="grid grid-rows-1 grid-flow-col gap-4 mx-8 mb-2">
-                        <div class="m-4 inline-block px-2 py-2.5 align-middle font-medium text-xs leading-tight rounded-xl shadow-sm capitalize border-2"
+                    <div class="grid grid-cols-2 grid-flow-col gap-4 mx-8 mb-2">
+                        <div class="flex flex-col m-4 px-2 py-2 align-middle font-medium text-xs leading-tight rounded-xl shadow-sm capitalize border-2"
                             :class="`border-${colorType(selPokemon.types[0].type.name)}`"
                             v-for="(ability, index) in selPokemon.abilities" :key="index">
-                            {{ ability.ability.name }}
+                            <p class="h-fit justify-center">
+                                {{ ability.ability.name }}
+                            </p>
                         </div>
                     </div>
 
@@ -48,7 +50,7 @@
                             <div class="rounded-full bg-slate-200 p-1 mt-1"> to deploy</div>
                         </div>
                         <div>
-                            <h3 class="text-slate-900 font-bold">Height</h3>
+                            <h3 class="text-slate-900 font-bold">Base exp</h3>
                             <div class="rounded-full bg-slate-200 p-1 mt-1">{{ selPokemon.base_experience }}</div>
                         </div>
                     </div>
@@ -67,13 +69,10 @@
                         </div>
                     </div>
 
-                    <h3 class="text-slate-900 text-base font-bold">Evolution</h3>
-                    <div>
-                        <img src="" alt="">
-                        <div>Lvl</div>
-                        <img src="" alt="">
-                        <div>Lvl</div>
-                        <img src="" alt="">
+                    <h3 class="text-slate-900 text-base font-bold mt-4">Evolution</h3>
+                    <div v-if="pokeSpecies">
+                        <EvolutionChainVue :pokeSpecies="pokeSpecies" />
+
                     </div>
                     <div class="bg-gray-400 flex flex-row justify-around m-2 p-2 rounded-xl">
                         <span>&lt;</span>
@@ -94,9 +93,13 @@
 
 <script>
 import axios from 'axios'
+import EvolutionChainVue from './EvolutionChain.vue'
 
 export default {
     name: 'PokeDetailed',
+    components: {
+        EvolutionChainVue
+    },
     props: {
         createDetails: Boolean,
         selPokemon: Object
@@ -111,7 +114,6 @@ export default {
         axios.get(this.selPokemon.species.url)
             .then(response => {
                 this.pokeSpecies = Object.freeze(response.data);
-                console.log(response.data)
             })
     },
     methods: {
